@@ -9,7 +9,8 @@ class App extends React.Component {
   state = {
     manager: '',
     players: [],
-    balance: '' // balance is not technically a number, its an object wrapped in bignumber.js
+    balance: '', // balance is not technically a number, its an object wrapped in bignumber.js
+    value: ''
   };
 
   async componentDidMount() {
@@ -27,6 +28,22 @@ class App extends React.Component {
         <h2>Lottery Contract!</h2>
         <p>This contract is managed by {this.state.manager}</p>
         <p>There are {this.state.players.length} people entered in the lottery so far, all competing for the grand prize of {web3.utils.fromWei(this.state.balance, 'ether')} eth!</p>
+        <hr />
+        <form>
+          <h4>Want to try your luck?</h4>
+          <div>
+            <label>Amount of ether to enter:  </label>
+            <input
+              value={this.state.value}
+              onChange={event => this.setState({ value: event.target.value })}
+            />
+          </div>
+          <button>Enter</button>
+        </form>
+        <hr />
+        <form>
+          
+        </form>
       </div>
     );
   }
