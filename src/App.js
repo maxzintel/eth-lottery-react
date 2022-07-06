@@ -47,6 +47,20 @@ class App extends React.Component {
     this.setState({ message: 'You have been entered!' });
   }
 
+  onClick = async () => {
+    const accounts = await web3.eth.getAccounts();
+
+    this.setState({ message: 'Waiting on transaction success...' });
+
+    // Can improve here by adding error handling if not manager.
+    // On send(), we get NO RETURN VALUE. Thus, we 
+    await lottery.methods.pickWinner().send({
+      from: accounts[0]
+    });
+
+    this.setState({ message: 'A winner has been picked!' });
+  }
+
   render() {
     return (
       <div className="Lottery">
@@ -73,10 +87,13 @@ class App extends React.Component {
         <h1>
           {this.state.message}
         </h1>
+        {/* Should only see the below if we are the manager of the contract.
+            For now, we will leave it as is but it will return an error if one is not the manager. */}
         <h4>
           Time to pick a winner?
         </h4>
-        <button>Pick Winner</button>
+        {/* Add onClick EventHandler */}
+        <button onClick={this.onClick} >Pick Winner</button>
       </div>
     );
   }
